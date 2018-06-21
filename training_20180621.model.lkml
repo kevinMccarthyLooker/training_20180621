@@ -1,5 +1,7 @@
 connection: "events_ecommerce"
 
+#test add a comment
+
 include: "*.view" # include all the views
 
 include: "*.dashboard" # include all the dashboards
