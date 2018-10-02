@@ -10,6 +10,7 @@ datagroup: training_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
 }
+#another change
 
 persist_with: training_default_datagroup
 
