@@ -1,13 +1,16 @@
 view: order_items {
   sql_table_name: public.order_items ;;
 
+#######################
+##### Primary Key #####
   dimension: id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
   }
 
-##### Foreign Keys #####
+#######################
+##### Foreign Keys ####
   dimension: user_id {
     type: number
 #   hidden: yes
@@ -24,6 +27,8 @@ view: order_items {
     sql: ${TABLE}.order_id ;;
   }
 
+#######################
+##### Dimensions ######
   dimension_group: created {
     group_label: "Date Created"
     type: time
@@ -38,10 +43,13 @@ view: order_items {
     sql: ${TABLE}.returned_at ;;
   }
 
+
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
   }
+
+# Exercise: Create 'complete' yesNo field off of status and then a measure called total_complete_sale_price
 
   dimension: sale_price {
     type: number
@@ -54,11 +62,10 @@ view: order_items {
   }
 
 
-  # ----- Sets of fields for drilling ------
+#######################
+##### Sets ######
   set: detail {
     fields: [id, users.id, inventory_items.id, users.first_name, users.last_name, inventory_items.product_name]
   }
-
-# Exercise: Create 'complete' yesNo field off of status and then total_complete_sale_price
 
 }
