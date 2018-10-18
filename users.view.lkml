@@ -13,7 +13,6 @@ view: users {
 
 ########################
 ##### Contact Info #####
-#To do: Create Full Name
 
   dimension: first_name {
     type: string
@@ -30,15 +29,17 @@ view: users {
     sql: ${TABLE}.email ;;
   }
 
+#To do: Create Full Name
+
 ############################
 ##### Demographic Info #####
-#To do: Create years_as_consumer
-#To do: Create age tiers
 
   dimension: age {
     type: number
     sql: ${TABLE}.age ;;
   }
+
+#To do: Create age tiers
 
   dimension: gender {
     type: string

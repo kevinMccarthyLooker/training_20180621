@@ -1,17 +1,6 @@
-connection: "events_ecommerce"
-
-#test add a comment
-#add another comment
 include: "*.view" # include all the views
 
-#include: "*.dashboard" # include all the dashboards
-#test
-datagroup: training_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
-}
-#another change
-#another change2
+connection: "events_ecommerce"
 
 persist_with: training_default_datagroup
 
@@ -31,4 +20,12 @@ explore: order_items {
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
     relationship: many_to_one
   }
+}
+
+#To do: Create Derived Table to provide a dimension 'years_as_consumer' based on first order
+
+## Datagroup definition(s): ##
+datagroup: training_default_datagroup {
+  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  max_cache_age: "1 hour"
 }
