@@ -20,6 +20,7 @@ explore: order_items {
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
     relationship: many_to_one
   }
+  #adding a comment
 }
 
 #To do: Create Derived Table to provide a dimension 'years_as_consumer' based on first order
