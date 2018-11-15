@@ -15,8 +15,9 @@ view: users {
 ##### Contact Info #####
 
   dimension: first_name {
+    label: "first Initial"
     type: string
-    sql: ${TABLE}.first_name;;
+    sql: left(${TABLE}.first_name,1);;
   }
 
   dimension: last_name {
@@ -29,7 +30,11 @@ view: users {
     sql: ${TABLE}.email ;;
   }
 
-#To do: Create Full Name
+dimension: full_name {
+  type: string
+  sql: ${first_name} || ' ' || ${last_name} ;;
+
+}
 
 ############################
 ##### Demographic Info #####
@@ -38,6 +43,19 @@ view: users {
     type: number
     sql: ${TABLE}.age ;;
   }
+
+  dimension: age_in_months{
+    type: number
+    sql: ${TABLE}.age*12 ;;
+  }
+
+  dimension: age_tier {
+    type: tier
+    tiers: [20,30,40,50,60,70]
+    style: integer
+    sql: ${age} ;;
+  }
+
 
 #To do: Create age tiers
 
@@ -51,7 +69,7 @@ view: users {
 #To do: Add Quarter Created and Day Of Year Created
   dimension_group: created {
     type: time
-    timeframes: [raw,date,month,year]
+    timeframes: [raw,date,month,year, day_of_year]
     sql: ${TABLE}.created_at ;;
   }
 
@@ -98,11 +116,24 @@ view: users {
     sql: ${TABLE}.traffic_source ;;
   }
 
+  dimension: major_sources {
+    case: {
+      when: {
+        sql: ${traffic_source} in ('Email','Organic') ;;
+        label: "direct"
+      }
+      else: "Other"
+
+    }
+#     sql: cse ;;
+  }
+
 ####################
 ##### Measures #####
 
 # To do: Create Domestic User Count
   measure: count {
+    label: "Users Count"
     type: count
     drill_fields: [id, first_name, last_name, events.count, order_items.count]
   }

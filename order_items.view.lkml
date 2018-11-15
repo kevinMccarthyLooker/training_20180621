@@ -1,5 +1,9 @@
+
 view: order_items {
-  sql_table_name: public.order_items ;;
+  view_label: "test"
+#   sql_table_name: public.order_items ;;
+  derived_table: {sql:select * public.order_items
+    ;;}
 
 #######################
 ##### Primary Key #####
@@ -45,6 +49,7 @@ view: order_items {
 
 
   dimension: status {
+    group_label: "demo"
     type: string
     sql: ${TABLE}.status ;;
   }
@@ -52,6 +57,7 @@ view: order_items {
 # Exercise: Create 'complete' yesNo field off of status and then a measure called total_complete_sale_price
 
   dimension: sale_price {
+    group_label: "demo"
     type: number
     sql: ${TABLE}.sale_price ;;
   }
@@ -60,6 +66,29 @@ view: order_items {
     type: count
     drill_fields: [detail*]
   }
+  measure: count_organic {
+    type: count
+    filters: {
+      field: users.traffic_source
+      value: "Organic"
+    }
+  }
+
+
+
+  measure: total_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
+  }
+  measure: min_sale_price {
+    type: min
+    sql: ${sale_price} ;;
+  }
+  measure: example {
+    type: number
+    sql: ${total_sale_price}+1 ;;
+  }
+
 
 
 #######################

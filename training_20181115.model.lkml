@@ -7,9 +7,12 @@ persist_with: training_default_datagroup
 explore: users {}
 
 explore: order_items {
+  fields: [ALL_FIELDS*,-order_items.count_organic]
+  sql_always_where: ${created_date}>'2018-01-01' ;;
   #To Do: Add distribution_centers join to this explore
   description: "Information about orders including user information"
   join: users {
+
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id} ;;
     relationship: many_to_one
